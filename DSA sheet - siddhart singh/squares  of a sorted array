@@ -30,8 +30,45 @@ Follow up: Squaring each element and sorting the new array is very trivial, coul
 There are two ways to solve this problem:
 NOTE that we have to make use of the term non-decreasing array!
 
-
 FIRST approach: using 2 pointers
+--------------------------------
+ Let's take the below array as an example:
+----------------------
+-4 | -1 | 0 | 3 | 10 |
+----------------------
+Now, both Lptr and Rptr will be placed at center. And both of its abs(absolute_value) will be checked since its time calculation is less than square value.
+~Firstly, zero will be placed in the new array.
+~ Then abs(-1)<abs(3). Thus 1^2 will be placed next and the Lptr will be moved towards left and comparison will be done again.
+
+SECOND approach: selecting the maximum first
+--------------------------------------------
+
+same as above approach but 2 pointers are placed at leftmost and rightmost corners. the maximum value is placed first.
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int l=0,r=nums.size()-1;
+        vector<int> ans;
+        while(l<r)
+        {
+            if(abs(nums[l])>abs(nums[r])){
+                ans.push_back(nums[l]*nums[l]);
+                l++;
+            }
+            
+            else{
+                ans.push_back(nums[r]*nums[r]);
+                r--;
+            }
+        }
+        ans.push_back(nums[l]*nums[l]);
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+
+
 
 Both the above methods have the time complexity  : O(N)
                             and space complexity : O(N)
